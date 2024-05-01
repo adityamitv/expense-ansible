@@ -63,7 +63,11 @@
       login_password: "{{ login_password }}"
       login_host: "{{ login_host }}"
       target: /app/schema/backend.sql
-      state: 
+      state: import
       name: all
+
+  - name: daemon-reload
+    ansible.builtin.systemd_service:
+      daemon_reload: true
 
   
