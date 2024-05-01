@@ -5,15 +5,15 @@
     login_host: db.devopshub.shop
   vars_prompt:
   - name: mysql_root_password
-    prompt: please enter MYSQL root password
+    prompt: please enter MySQL root password
     private: no
   tasks:
-  - name: Install MYSQL Server
+  - name: Install MySQL Server
     ansible.builtin.dnf:
       name: mysql-server
       state: latest
 
-  - name: Start and Enable MYSQL server
+  - name: Start and Enable MySQL server
     ansible.builtin.service:
       name: mysqld
       state: started
