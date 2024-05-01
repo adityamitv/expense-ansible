@@ -5,12 +5,12 @@
     login_host: db.devopshub.shop
   tasks:
   - name: Install MYSQL Server
-    ansible.builtin.debug:
+    ansible.builtin.dnf:
       name: mysql-server
       state: latest
 
   - name: Start and Enable MYSQL server
-    ansible.builtin.debug:
+    ansible.builtin.service:
       name: mysqld
       state: started
       enable: yes
