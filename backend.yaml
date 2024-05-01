@@ -13,8 +13,11 @@
 
   - name: Install nodejs
     ansible.builtin.dnf: # only works for redhat family
-      name: nodejs
+      name: "{{ item }}"
       state: installed
+    loops:
+    - nodejs
+    - mysql
 
   - name: create expense user
     ansible.builtin.user:
@@ -60,5 +63,7 @@
       login_password: "{{ login_password }}"
       login_host: "{{ login_host }}"
       target: /app/schema/backend.sql
-      state: dump
+      state: 
       name: all
+
+  
