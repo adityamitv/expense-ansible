@@ -1,2 +1,6 @@
 [db]
 db.devopshub.shop
+
+[backend]
+backend.devopshub.shop
+
