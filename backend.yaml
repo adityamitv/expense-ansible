@@ -2,7 +2,8 @@
   hosts: backend
   become: yes
   vars:
-  
+    login_host: db.devopshub.shop
+    login_password: ExpenseApp@1
   tasks:
   - name: Install default nodejs
     ansible.builtin.command: dnf module disable nodejs -y
@@ -39,3 +40,24 @@
     ansible.builtin.command: npm install
     args: 
       chdir: /app
+
+  - name: copy backend service
+    ansible.builtin.copy:
+      src: backend.service
+      dest: /etc/systemd/system/backend.service
+
+  - name: install python mysql dependencies
+    ansible.builtin.pip:
+      name:
+      - pyMYSQL # to connect MySQL DB form ansible
+      - cryptography
+      executable: pip3.9 # pip3.11 if python version is 3.11
+
+  
+ - name: import data into mysql
+    community.mysql.mysql_db:
+      login_user: root
+      login_password: "{{ login_password }}"
+      login_host: "{{ login_host }}"
+      target: /app/schema/backend.sql
+      state: dump
