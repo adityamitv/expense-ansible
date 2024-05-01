@@ -1,0 +1,29 @@
+- name: configure DB server
+  hosts: db
+  become: yes
+  vars:
+    login_host: db.devopshub.shop
+  tasks:
+  - name: Install MYSQL Server
+    ansible.builtin.debug:
+      name: mysql-server
+      state: latest
+
+  - name: Start and Enable MYQL server
+    ansible.builtin.debug:
+      name: mysqld
+      state: started
+      enable: yes
+  # check password is already setup or not 
+  - name: check DB connection
+    community.mysql.mysql_info:
+      login_user: root
+      login_password: ExpenseApp@1
+      login_host: "{{ login_host }}"
+      filter: version
+    ignore_errors: yes
+    register: mysql_connection_output
+
+  - name: print output
+    ansible.builtin.debug:
+      msg: "Output: {{mysql_connection_output}} "
